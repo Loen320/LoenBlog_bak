@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wulong.ssm.blog.mapper.UserLoginInfoMapper">
+    <resultMap id="BaseResultMap" type="com.wulong.ssm.blog.entity.UserLoginInfo">
+        <id column="login_id" property="loginId" jdbcType="INTEGER"/>
+        <result column="login_user" property="loginUser" jdbcType="VARCHAR"/>
+        <result column="login_ip" property="loginIp" jdbcType="VARCHAR"/>
+        <result column="login_stamp" property="loginStamp" jdbcType="VARCHAR"/>
+        <result column="country" property="country" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="isp" property="isp" jdbcType="VARCHAR"/>
+        <result column="adcode" property="adcode" jdbcType="VARCHAR"/>
+        <result column="city_code" property="cityCode" jdbcType="VARCHAR"/>
+        <result column="weathercode" property="weathercode" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="tb">user_login_info</sql>
+
+    <sql id="Base_Column_List">
+    login_id, login_user, login_ip, login_stamp, country, address, isp, adcode, city_code ,weathercode
+  </sql>
+
+    <select id="getInfoByIp" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from <include refid="tb"/>
+        where login_ip = #{loginIp}
+    </select>
+
+    <insert id="insert" parameterType="com.wulong.ssm.blog.entity.UserLoginInfo" useGeneratedKeys="true" keyProperty="loginId">
+        insert into
+        <include refid="tb"/>
+        (login_user, login_ip, login_stamp, country, address, isp, adcode, city_code ,weathercode)
+        values (#{loginUser},#{loginIp},#{loginStamp},#{country},#{address},#{isp},#{adcode},#{cityCode},#{weathercode})
+    </insert>
+
+</mapper>
